@@ -1,0 +1,26 @@
+{
+    "presets": [ 
+        // es6,es7语法转换成es5 但是这个包还不能转换es6，es7的一些新特性例如Array.includes()
+        ["@babel/preset-env", {
+            "modules": false,
+            "targets": {
+                "browsers": ["> 1%", "last 2 versions", "not ie<=8"]
+            }
+        }],
+        // react语法转换成es5
+        "@babel/preset-react"
+    ],
+    "plugins": [
+        // 负责转译新增的 API 和全局对象，保证在浏览器的兼容性。 
+        ["@babel/plugin-transform-runtime",{
+            "corejs":3,
+            "useBUildIns":"usage" 
+            // 使用useBuiltlns属性来控制@babel/preset-env使用何种的方式帮我们导入polyfill的核心，有三个值可选（entry,usage,false）
+            // 1. entry : 是一种入口导入方法，只要我们在打包配置入口，或者 文件入口写入 import “core-js”这样的一串代码，babel就会跟据我们配置的目标浏览器配置来引入所需要的polyfill(也就是说不管你用不用得到，只要浏览器不支持的都要引入)
+            //  import "core-js"
+            // 2. 参考目标浏览器（browserslit）和代码中使用到的特性来按需加入polyfill 使用该参数的话还需要传一个corejs的版本号
+            // 3 false: 不引入polyfill
+
+        }]
+    ]
+}
